@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSON
 import com.atguigu.gmall0218.common.constant.GmallConstant
 import com.atguigu.gmall0218.realtime.bean.StartupLog
 import com.atguigu.gmall0218.realtime.util.{MyKafkaUtil, RedisUtil}
-import org.apache.commons.lang.time.DateUtils
 import org.apache.hadoop.conf.Configuration
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.SparkConf
@@ -45,8 +44,6 @@ object DauApp {
 
     startupLogDstream.cache()
 
-
-
     //2  去重  根据今天访问过的用户清单进行过滤
     val filteredDstream: DStream[StartupLog] = startupLogDstream.transform { rdd =>
       println("过滤前："+rdd.count())
@@ -69,8 +66,7 @@ object DauApp {
       startupLogItr.take(1)
     }
 
-
-
+      
    // 问题 ：没有周期性查询redis 而只执行了一次
 //    val jedis: Jedis = RedisUtil.getJedisClient
 //    val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
@@ -106,10 +102,9 @@ object DauApp {
       }
     }
 
-
     // 4 保存到hbase
     distinctDstream.foreachRDD{rdd=>
-      rdd.saveToPhoenix("gmall0218_dau",Seq("MID", "UID", "APPID", "AREA", "OS", "CH", "TYPE", "VS", "LOGDATE", "LOGHOUR", "TS"),new Configuration,Some("hadoop1,hadoop2,hadoop3:2181"))
+        rdd.saveToPhoenix("gmall0218_dau",Seq("MID", "UID", "APPID", "AREA", "OS", "CH", "TYPE", "VS", "LOGDATE", "LOGHOUR", "TS"),new Configuration,Some("hadoop102,hadoop103,hadoop104:2181"))
     }
 
     ssc.start()

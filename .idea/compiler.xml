@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gmall0218-canal" />
+        <module name="gmall0218-common" />
+        <module name="gmall0218-logger" />
+        <module name="gmall0218-mock" />
+        <module name="gmall0218-publisher" />
+        <module name="gmall0218-realtime" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gmall0218-canal" target="1.8" />
+      <module name="gmall0218-common" target="1.8" />
+      <module name="gmall0218-logger" target="1.8" />
+      <module name="gmall0218-mock" target="1.8" />
+      <module name="gmall0218-parent" target="1.8" />
+      <module name="gmall0218-publisher" target="1.8" />
+      <module name="gmall0218-realtime" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

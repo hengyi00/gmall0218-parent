@@ -58,13 +58,22 @@ object AlertApp {
             (couponUidsSet.size() >= 3 && !clickItemFlag, alertInfo)
 
         }
-        checkAlertInfoDstream.foreachRDD{rdd=>
-            println(rdd.collect().mkString("\n"))
-
-        }
+        val alertInfoDStream: DStream[AlertInfo] = checkAlertInfoDstream.filter(_._1).map(_._2)
 
 
-        // 5  同一设备，每分钟只记录一次预警。去重
+
+        // 5 去重 依靠存储的容器进行去重 利用es的主键进行去重 主键由mid+分钟组成 确保每分钟相同的mid只能有一条预警
+
+        alertInfoDStream.foreachRDD{rdd=>{
+            rdd.foreachPartition{alertInfoItr=>
+                val alertList:List[(String, AlertInfo)] = alertInfoItr.toList.map(alertInfo=>(alertInfo.mid+"_"+alertInfo.ts/1000/60, alertInfo))
+                println(alertList.mkString("\n"))
+
+                MyKafkaUtil.insertBulk(GmallConstant.ES_INDEX_ALERT, alertList)
+            }
+        }}
+
+
         ssc.start()
         ssc.awaitTermination()
 

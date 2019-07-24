@@ -46,7 +46,7 @@ object OrderApp {
             rdd.saveToPhoenix("GMALL0218_ORDER_INFO",
                 Seq("ID","PROVINCE_ID", "CONSIGNEE", "ORDER_COMMENT", "CONSIGNEE_TEL", "ORDER_STATUS", "PAYMENT_WAY", "USER_ID","IMG_URL", "TOTAL_AMOUNT", "EXPIRE_TIME", "DELIVERY_ADDRESS", "CREATE_TIME","OPERATE_TIME","TRACKING_NO","PARENT_ORDER_ID","OUT_TRADE_NO", "TRADE_BODY", "CREATE_DATE", "CREATE_HOUR"),
                 new Configuration,
-                Some("hadoop1,hadoop2,hadoop3:2181") )
+                Some("hadoop102,hadoop103,hadoop104:2181") )
         }
 
         ssc.start()

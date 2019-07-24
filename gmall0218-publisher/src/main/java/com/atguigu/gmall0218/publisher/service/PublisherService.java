@@ -10,10 +10,13 @@ public interface PublisherService {
     // 查询分时明细
     public Map getDauHour(String date);
 
-    //查询总交易额
+    // 查询总交易额
     public Double getOrderAmountTotal(String date);
 
-    //查询分时交易额
+    // 查询分时交易额
     public Map getOrderAmountHour(String date);
+
+    // 按关键字进行灵活查询
+    public Map getSaleDetail(String date ,String keyword ,int pageSize ,int pageNo);
 
 }
